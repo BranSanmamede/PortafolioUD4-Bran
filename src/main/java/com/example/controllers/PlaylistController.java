@@ -1,7 +1,8 @@
 package com.example.controllers;
 
+import com.example.dto.PlaylistDTO;
 import com.example.models.Playlist;
-import com.example.repositories.PlaylistRepository;
+import com.example.services.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,36 +12,31 @@ import java.util.List;
 @RequestMapping("/api/listas")
 public class PlaylistController {
     @Autowired
-    private PlaylistRepository playlistRepository;
+    private PlaylistService playlistService;
 
     @GetMapping
     public List<Playlist> getAllPlaylist() {
-        return playlistRepository.findAll();
+        return playlistService.getAllPlaylists();
     }
 
     @GetMapping("/{id}")
     public Playlist getPlaylistById(@PathVariable Long id) {
-        return playlistRepository.findById(id).orElse(null);
+        return playlistService.getPlaylistById(id);
     }
 
     @PostMapping
     public Playlist createPlaylist(@RequestBody Playlist playlist) {
-        return playlistRepository.save(playlist);
+        return playlistService.createPlaylist(playlist);
     }
 
     @PutMapping("/{id}")
-    public Playlist updatePlaylist(@PathVariable Long id, @RequestBody Playlist playlist) {
-        playlist.setId(id);
-        return playlistRepository.save(playlist);
-    }
+    public Playlist updatePlaylist(@PathVariable Long id, @RequestBody Playlist playlist) { return playlistService.updatePlaylist(id, playlist); }
 
     @DeleteMapping("/{id}")
-    public void deletePlaylist(@PathVariable Long id) {
-        playlistRepository.deleteById(id);
-    }
+    public void deletePlaylist(@PathVariable Long id) { playlistService.deletePlaylist(id); }
 
     @GetMapping("/{id}/detalle")
-    public Playlist getPlaylistDetail(@PathVariable Long id) {
-        return getPlaylistById(id);
+    public PlaylistDTO getPlaylistDetail(@PathVariable Long id) {
+        return playlistService.getPlaylistDetail(id);
     }
 }

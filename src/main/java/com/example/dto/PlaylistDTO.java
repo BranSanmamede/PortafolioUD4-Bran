@@ -1,25 +1,12 @@
-package com.example.models;
-
-import jakarta.persistence.*;
+package com.example.dto;
 
 import java.util.List;
 
-@Entity
-@Table(name = "listareproduccion")
-public class Playlist {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PlaylistDTO {
     private Long id;
-
-    @Column(name = "nombre")
     private String name;
-
-    @Column(name = "descripcion")
     private String description;
-
-    @ManyToMany
-    @JoinTable(name = "listacancion", joinColumns = @JoinColumn(name = "listaid"), inverseJoinColumns = @JoinColumn(name = "cancionid"))
-    private List<Song> songs;
+    private List<SongDTO> songs;
 
     public Long getId() {
         return id;
@@ -45,11 +32,11 @@ public class Playlist {
         this.description = description;
     }
 
-    public List<Song> getSongs() {
+    public List<SongDTO> getSongs() {
         return songs;
     }
 
-    public void setSongs(List<Song> songs) {
+    public void setSongs(List<SongDTO> songs) {
         this.songs = songs;
     }
 }
