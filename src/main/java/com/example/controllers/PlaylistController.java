@@ -20,7 +20,7 @@ public class PlaylistController {
     }
 
     @GetMapping("/{id}")
-    public Playlist getPlaylistById(@PathVariable Long id) {
+    public PlaylistDTO getPlaylistById(@PathVariable Long id) {
         return playlistService.getPlaylistById(id);
     }
 

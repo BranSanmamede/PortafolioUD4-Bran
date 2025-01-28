@@ -18,8 +18,8 @@ public class Song {
     @Column(name = "artista")
     private String performer;
 
-    @ManyToMany(mappedBy = "songs")
-    private List<Playlist> playlists;
+    @OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlaylistSong> playlistSongs;
 
     public Long getId() {
         return id;
@@ -45,11 +45,11 @@ public class Song {
         this.performer = performer;
     }
 
-    public List<Playlist> getPlaylists() {
-        return playlists;
+    public List<PlaylistSong> getPlaylistSongs() {
+        return playlistSongs;
     }
 
-    public void setPlaylists(List<Playlist> playlists) {
-        this.playlists = playlists;
+    public void setPlaylistSongs(List<PlaylistSong> playlistSongs) {
+        this.playlistSongs = playlistSongs;
     }
 }

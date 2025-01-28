@@ -17,9 +17,8 @@ public class Playlist {
     @Column(name = "descripcion")
     private String description;
 
-    @ManyToMany
-    @JoinTable(name = "listacancion", joinColumns = @JoinColumn(name = "listaid"), inverseJoinColumns = @JoinColumn(name = "cancionid"))
-    private List<Song> songs;
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlaylistSong> playlistSongs;
 
     public Long getId() {
         return id;
@@ -45,11 +44,11 @@ public class Playlist {
         this.description = description;
     }
 
-    public List<Song> getSongs() {
-        return songs;
+    public List<PlaylistSong> getPlaylistSongs() {
+        return playlistSongs;
     }
 
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
+    public void setPlaylistSongs(List<PlaylistSong> playlistSongs) {
+        this.playlistSongs = playlistSongs;
     }
 }

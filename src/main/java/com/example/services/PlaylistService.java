@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.dto.PlaylistDTO;
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.models.Playlist;
 import com.example.repositories.PlaylistRepository;
 import com.example.utils.Util;
@@ -16,16 +17,19 @@ public class PlaylistService {
 
     public List<PlaylistDTO> getAllPlaylists() { return Util.convertPlaylistsToDTO(playlistRepository.findAll()); }
 
-    public Playlist getPlaylistById(Long id) { return playlistRepository.findById(id).orElse(null); }
+    public PlaylistDTO getPlaylistById(Long id) { return Util.convertPlaylistToDTO(playlistRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Playlist no encontrada", id))); }
 
     public PlaylistDTO createPlaylist(Playlist playlist) { return Util.convertPlaylistToDTO(playlistRepository.save(playlist)); }
 
     public PlaylistDTO updatePlaylist(Long id, Playlist playlist) {
+        if(!playlistRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Playlist no encontrada", id);
+        }
         playlist.setId(id);
         return Util.convertPlaylistToDTO(playlistRepository.save(playlist));
     }
 
-    public void deletePlaylist(Long id) { playlistRepository.delete(getPlaylistById(id)); }
+    public void deletePlaylist(Long id) { playlistRepository.delete(playlistRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Playlist no encontrada", id))); }
 
-    public PlaylistDTO getPlaylistDetail(Long id) { return Util.convertPlaylistToDTO(getPlaylistById(id)); }
+    public PlaylistDTO getPlaylistDetail(Long id) { return getPlaylistById(id); }
 }
