@@ -15,7 +15,7 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     @GetMapping
-    public List<Playlist> getAllPlaylist() {
+    public List<PlaylistDTO> getAllPlaylist() {
         return playlistService.getAllPlaylists();
     }
 
@@ -25,12 +25,10 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public Playlist createPlaylist(@RequestBody Playlist playlist) {
-        return playlistService.createPlaylist(playlist);
-    }
+    public PlaylistDTO createPlaylist(@RequestBody Playlist playlist) { return playlistService.createPlaylist(playlist); }
 
     @PutMapping("/{id}")
-    public Playlist updatePlaylist(@PathVariable Long id, @RequestBody Playlist playlist) { return playlistService.updatePlaylist(id, playlist); }
+    public PlaylistDTO updatePlaylist(@PathVariable Long id, @RequestBody Playlist playlist) { return playlistService.updatePlaylist(id, playlist); }
 
     @DeleteMapping("/{id}")
     public void deletePlaylist(@PathVariable Long id) { playlistService.deletePlaylist(id); }

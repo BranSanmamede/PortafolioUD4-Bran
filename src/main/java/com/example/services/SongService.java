@@ -1,7 +1,9 @@
 package com.example.services;
 
+import com.example.dto.SongDTO;
 import com.example.models.Song;
 import com.example.repositories.SongRepository;
+import com.example.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ public class SongService {
     @Autowired
     private SongRepository songRepository;
 
-    public List<Song> getAllSongs() { return songRepository.findAll(); }
+    public List<SongDTO> getAllSongs() { return Util.convertSongsToDTO(songRepository.findAll()); }
 
-    public Song createSong(Song song) { return songRepository.save(song); }
+    public SongDTO createSong(Song song) { return Util.convertSongToDTO(songRepository.save(song)); }
 }

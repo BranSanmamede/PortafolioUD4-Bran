@@ -5,11 +5,7 @@ public class SongDTO {
     private String title;
     private String artist;
 
-    public SongDTO(Long id, String title, String artist) {
-        this.id = id;
-        this.title = title;
-        this.artist = artist;
-    }
+    public SongDTO() {}
 
     public Long getId() {
         return id;
